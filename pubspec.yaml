@@ -13,7 +13,7 @@ dependencies:
   stagexl:
     git:
       url: https://github.com/mnordine/StageXL
-      ref: texture-formats
+      ref: compress-textures-2
 
 transformers:
 - $dart2js:
