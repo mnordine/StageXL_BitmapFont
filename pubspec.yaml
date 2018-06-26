@@ -13,7 +13,7 @@ dependencies:
   stagexl:
     git:
       url: https://github.com/mnordine/StageXL
-      ref: compress-textures-2
+      ref: assets-map-instead-of-list
 
 transformers:
 - $dart2js:
