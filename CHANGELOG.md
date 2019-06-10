@@ -3,6 +3,10 @@
 This file contains highlights of what changes on each version of the StageXL_BitmapFont
 package. This file is normally updated whenever we push a new version to pub.
 
+#### Pub version 0.5.0
+  * Raised dependency to StageXL 1.4.0
+  * Ready for Dart 2.0
+
 #### Pub version 0.4.0
   * Added support for HiDpi BitmapFonts.
   * Enables Dart Strong Mode.
