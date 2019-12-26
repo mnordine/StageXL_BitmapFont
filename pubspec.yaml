@@ -13,7 +13,7 @@ dependencies:
   stagexl:
     git:
       url: https://github.com/mnordine/StageXL
-      ref: assets-map-instead-of-list
+      ref: cancellation
 
 transformers:
 - $dart2js:
