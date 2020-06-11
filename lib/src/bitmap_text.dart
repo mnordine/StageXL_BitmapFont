@@ -22,7 +22,8 @@ class BitmapText extends Bitmap {
     }
   }
 
-  void set x(num value) {
+  @override
+  set x(num value) {
     _origX = super.x = value;
     _align();
   }
@@ -52,7 +53,7 @@ class BitmapText extends Bitmap {
   }
 
   HorizontalAlign get horizontalAlign => _hAlign;
-  void set horizontalAlign(HorizontalAlign value) {
+  set horizontalAlign(HorizontalAlign value) {
     _hAlign = value;
   }
 }
