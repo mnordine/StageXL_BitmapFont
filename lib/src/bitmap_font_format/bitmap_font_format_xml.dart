@@ -10,7 +10,7 @@ class _BitmapFontFormatXml extends BitmapFontFormat {
     var source = await bitmapFontLoader.getSource();
     var pixelRatio = bitmapFontLoader.getPixelRatio();
 
-    var xml = parse(source);
+    var xml = XmlDocument.parse(source);
     var fontXml = xml.findElements("font").first;
     var infoXml = fontXml.findElements("info").first;
     var commonXml = fontXml.findElements("common").first;
