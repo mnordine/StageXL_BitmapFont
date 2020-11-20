@@ -1,7 +1,6 @@
 part of stagexl_bitmapfont;
 
 class DistanceFieldShadowFilter extends BitmapFilter {
-
   /// This configuration of the front distance field
   DistanceFieldConfig frontConfig;
 
@@ -19,41 +18,40 @@ class DistanceFieldShadowFilter extends BitmapFilter {
   DistanceFieldShadowFilter(
       this.frontConfig, this.shadowConfig, this.offsetX, this.offsetY);
 
+  @override
   BitmapFilter clone() {
     var frontConfig = this.frontConfig.clone();
     var shadowConfig = this.shadowConfig.clone();
-    return new DistanceFieldShadowFilter(
-        frontConfig, shadowConfig, this.offsetX, this.offsetY);
+    return DistanceFieldShadowFilter(
+        frontConfig, shadowConfig, offsetX, offsetY);
   }
 
   //---------------------------------------------------------------------------
 
-  void apply(BitmapData bitmapData, [Rectangle<num> rectangle]) {
-    // TODO: implement DistanceFieldFilter for BitmapDatas.
-  }
+  @override
+  void apply(BitmapData bitmapData, [Rectangle<num> rectangle]) {}
 
   //---------------------------------------------------------------------------
 
+  @override
   void renderFilter(
       RenderState renderState, RenderTextureQuad renderTextureQuad, int pass) {
-
     RenderContextWebGL renderContext = renderState.renderContext;
-    RenderTexture renderTexture = renderTextureQuad.renderTexture;
+    var renderTexture = renderTextureQuad.renderTexture;
     _DistanceFieldFilterProgram renderProgram;
 
-    renderProgram  = renderContext.getRenderProgram(
-        r"$DistanceFieldFilterProgram",
-        () => new _DistanceFieldFilterProgram());
+    renderProgram = renderContext.getRenderProgram(
+        r'$DistanceFieldFilterProgram', () => _DistanceFieldFilterProgram());
 
     renderContext.activateRenderProgram(renderProgram);
     renderContext.activateRenderTexture(renderTexture);
 
     renderState.globalMatrix.prependTranslation(offsetX, offsetY);
     renderProgram.renderDistanceFieldFilterQuad(
-        renderState, renderTextureQuad, this.shadowConfig);
+        renderState, renderTextureQuad, shadowConfig);
 
     renderState.globalMatrix.prependTranslation(-offsetX, -offsetY);
     renderProgram.renderDistanceFieldFilterQuad(
-        renderState, renderTextureQuad, this.frontConfig);
+        renderState, renderTextureQuad, frontConfig);
   }
 }
