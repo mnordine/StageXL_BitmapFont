@@ -2,6 +2,8 @@ analyzer:
   strong-mode:
     implicit-casts: true
     implicit-dynamic: true
+  enable-experiment:
+    - non-nullable
 linter:
   # http://dart-lang.github.io/linter/lints/
   rules:

@@ -19,8 +19,8 @@ class _BitmapFontLoaderTextureAtlas extends BitmapFontLoader {
   @override
   Future<BitmapData> getBitmapData(int id, String filename) {
     var regex = new RegExp(r"(.+?)(\.[^.]*$|$)");
-    var match = regex.firstMatch(filename);
-    var name = this.namePrefix + match.group(1);
+    var match = regex.firstMatch(filename)!;
+    var name = this.namePrefix + match.group(1)!;
     return new Future.value(this.textureAtlas.getBitmapData(name));
   }
 }

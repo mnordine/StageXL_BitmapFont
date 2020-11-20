@@ -5,14 +5,13 @@ description: BitmapFont support for StageXL.
 homepage: http://www.stagexl.org
 
 environment:
-  sdk: '>=2.0.0 <3.0.0'
+  sdk: '>=2.10.0 <3.0.0'
 
 dependencies:
-  xml: '>=4.0.0 <5.0.0'
   stagexl:
     git:
-      url: https://github.com/mnordine/StageXL
-      ref: dart-2
+      url: https://github.com/bp74/StageXL
+      ref: non-nullable
 
 dev_dependencies:
   build_test: any

@@ -2,10 +2,10 @@ part of stagexl_bitmapfont;
 
 class _BitmapFontLoaderFile extends BitmapFontLoader {
 
-  BitmapDataLoadOptions _loadOptions;
-  BitmapDataLoadInfo _loadInfo;
+  late BitmapDataLoadOptions _loadOptions;
+  late BitmapDataLoadInfo _loadInfo;
 
-  _BitmapFontLoaderFile(String sourceUrl, BitmapDataLoadOptions options) {
+  _BitmapFontLoaderFile(String sourceUrl, BitmapDataLoadOptions? options) {
     _loadOptions = options ?? BitmapData.defaultLoadOptions;
     _loadInfo = new BitmapDataLoadInfo(sourceUrl, _loadOptions.pixelRatios);
   }
@@ -23,7 +23,7 @@ class _BitmapFontLoaderFile extends BitmapFontLoader {
     var loaderUrl = _loadInfo.loaderUrl;
     var pixelRatio = _loadInfo.pixelRatio;
     var regex = new RegExp(r"^(.*/)?(?:$|(.+?)(?:(\.[^.]*$)|$))");
-    var path = regex.firstMatch(loaderUrl).group(1);
+    var path = regex.firstMatch(loaderUrl)!.group(1);
     var imageUrl = path == null ? filename : "$path$filename";
     var bitmap = await BitmapData.load(imageUrl, _loadOptions);
     var renderTextureQuad = bitmap.renderTextureQuad.withPixelRatio(pixelRatio);

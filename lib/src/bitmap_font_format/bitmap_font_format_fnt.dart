@@ -14,11 +14,11 @@ class _BitmapFontFormatFnt extends BitmapFontFormat {
     var lineRegExp = new RegExp(r'(\w+)((' + argsRegExp.pattern + r')+)');
     var splitRegExp = new RegExp(r'\r\n|\r|\n');
 
-    BitmapFontInfo info;
-    BitmapFontCommon common;
-    List<BitmapFontPage> pages = new List<BitmapFontPage>();
-    List<BitmapFontChar> chars = new List<BitmapFontChar>();
-    List<BitmapFontKerning> kernings = new List<BitmapFontKerning>();
+    late BitmapFontInfo info;
+    late BitmapFontCommon common;
+    List<BitmapFontPage> pages = [];
+    List<BitmapFontChar> chars = [];
+    List<BitmapFontKerning> kernings = [];
 
     for(var line in source.split(splitRegExp)) {
 
@@ -26,7 +26,7 @@ class _BitmapFontFormatFnt extends BitmapFontFormat {
       if (match == null) continue;
 
       var chunk = match.group(1);
-      var args = match.group(2);
+      var args = match.group(2)!;
       var argsMatch = argsRegExp.allMatches(args);
       var argsMap = _convertArgsMatches(argsMatch);
 
@@ -107,15 +107,15 @@ class _BitmapFontFormatFnt extends BitmapFontFormat {
   //---------------------------------------------------------------------------
 
   Map<String, String> _convertArgsMatches(Iterable<Match> matches) {
-    var map = new Map<String, String>();
+    var map = <String, String>{};
     matches.forEach((match) {
-      map[match.group(1)] = match.group(2);
+      map[match.group(1)!] = match.group(2)!;
     });
     return map;
   }
 
-  String _getString(Map map, String name, String defaultValue) {
-    String value = map[name];
+  String _getString(Map<String, String> map, String name, String defaultValue) {
+    var value = map[name];
     if (value is! String) {
       return defaultValue;
     } else if (value.startsWith('"') && value.endsWith('"')) {
@@ -125,8 +125,8 @@ class _BitmapFontFormatFnt extends BitmapFontFormat {
     }
   }
 
-  int _getInt(Map map, String name, int defaultValue) {
-    String value = map[name];
+  int _getInt(Map<String, String> map, String name, int defaultValue) {
+    var value = map[name];
     if (value is String) {
       return int.parse(value);
     } else {
@@ -134,16 +134,16 @@ class _BitmapFontFormatFnt extends BitmapFontFormat {
     }
   }
 
-  bool _getBool(Map map, String name, bool defaultValue) {
-    String value = map[name];
+  bool _getBool(Map<String, String> map, String name, bool defaultValue) {
+    var value = map[name];
     if (value == null) return defaultValue;
     if (value == "1") return true;
     if (value == "0") return false;
     throw new FormatException("Error converting '$name' to bool.");
   }
 
-  List<int> _getIntList(Map map, String name, List<int> defaultValue) {
-    String value = map[name];
+  List<int> _getIntList(Map<String, String> map, String name, List<int> defaultValue) {
+    var value = map[name];
     if (value is String) {
       return value.split(",").map(int.parse).toList();
     } else {

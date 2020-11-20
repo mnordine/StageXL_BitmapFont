@@ -96,7 +96,7 @@ class _BitmapFontFormatXml extends BitmapFontFormat {
 
   //---------------------------------------------------------------------------
 
-  String _getAtttributeValue(XmlElement xml, String name) {
+  String? _getAtttributeValue(XmlElement xml, String name) {
     for(var attribute in xml.attributes) {
       if (attribute.name.local == name) return attribute.value;
     }

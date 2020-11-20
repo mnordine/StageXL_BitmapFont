@@ -44,13 +44,12 @@ class _BitmapFontFormatJson extends BitmapFontFormat {
         _getInt(data, "greenChnl", 0),
         _getInt(data, "blueChnl", 0));
 
-    var pages = new List<BitmapFontPage>();
+    var pages = <BitmapFontPage>[];
     var file = _getString(data, "file", "");
     var bitmapData = await bitmapFontLoader.getBitmapData(0, file);
     pages.add(new BitmapFontPage(0, bitmapData));
 
-    var charMaps = data["chars"];
-    if (charMaps == null) charMaps = new List();
+    List<Map> charMaps = data["chars"] ?? [];
 
     var chars = charMaps.map((charMap) {
 
@@ -76,8 +75,7 @@ class _BitmapFontFormatJson extends BitmapFontFormat {
 
     }).toList();
 
-    var kerningMaps = data["kernings"];
-    if (kerningMaps == null) kerningMaps = new List();
+    List<Map> kerningMaps = data["kernings"] ?? [];
 
     var kernings = kerningMaps.map((kerningMap) {
       var first = _getInt(kerningMap, "first", -1);
@@ -100,21 +98,16 @@ class _BitmapFontFormatJson extends BitmapFontFormat {
     var value = map[name];
     if (value is int) {
       return value;
-    } else if (defaultValue is int) {
-      return defaultValue;
-    } else {
-      return 0;
     }
+
+    return defaultValue;
   }
 
   bool _getBool(Map map, String name, bool defaultValue) {
     var value = map[name];
     if (value is int) {
       return value == 1;
-    } else if (defaultValue is bool) {
-      return defaultValue;
-    } else {
-      return false;
     }
+    return defaultValue;
   }
 }

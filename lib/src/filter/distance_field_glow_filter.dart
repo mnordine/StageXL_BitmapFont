@@ -22,7 +22,7 @@ class DistanceFieldGlowFilter extends BitmapFilter {
   //---------------------------------------------------------------------------
 
   @override
-  void apply(BitmapData bitmapData, [Rectangle<num> rectangle]) {
+  void apply(BitmapData bitmapData, [Rectangle<num>? rectangle]) {
     // TODO: implement DistanceFieldGlowFilter for BitmapDatas.
   }
 
@@ -32,7 +32,7 @@ class DistanceFieldGlowFilter extends BitmapFilter {
   void renderFilter(
       RenderState renderState, RenderTextureQuad renderTextureQuad, int pass) {
 
-    RenderContextWebGL renderContext = renderState.renderContext;
+    RenderContextWebGL renderContext = renderState.renderContext as RenderContextWebGL;
     RenderTexture renderTexture = renderTextureQuad.renderTexture;
     _DistanceFieldGlowFilterProgram renderProgram;
 
@@ -193,8 +193,8 @@ class _DistanceFieldGlowFilterProgram extends RenderProgram {
     var my = matrix.ty;
 
     for(var i = 0, o = 0; i < vertexCount; i++, o += 4) {
-      num x = vxList[o + 0];
-      num y = vxList[o + 1];
+      var x = vxList[o + 0];
+      var y = vxList[o + 1];
       vxData[vxIndex + 00] = mx + ma * x + mc * y;
       vxData[vxIndex + 01] = my + mb * x + md * y;
       vxData[vxIndex + 02] = vxList[o + 2];

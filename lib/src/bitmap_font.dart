@@ -26,7 +26,7 @@ class BitmapFont {
 
   static Future<BitmapFont> load(String url, [
       BitmapFontFormat bitmapFontFormat = BitmapFontFormat.FNT,
-      BitmapDataLoadOptions bitmapDataLoadOptions]) =>
+      BitmapDataLoadOptions? bitmapDataLoadOptions]) =>
           bitmapFontFormat.load(new _BitmapFontLoaderFile(
               url, bitmapDataLoadOptions));
 
@@ -49,7 +49,7 @@ class BitmapFont {
 
   //---------------------------------------------------------------------------
 
-  BitmapFontChar getChar(int id) {
+  BitmapFontChar? getChar(int id) {
     for(int i = 0; i < this.chars.length; i++) {
       var char = this.chars[i];
       if (char.id == id) return char;
@@ -57,7 +57,7 @@ class BitmapFont {
     return null;
   }
 
-  BitmapFontKerning getKerning(int first, int second) {
+  BitmapFontKerning? getKerning(int first, int second) {
     for(int i = 0; i < this.kernings.length; i++) {
       var kerning = this.kernings[i];
       if (kerning.first == first && kerning.second == second) {
@@ -89,8 +89,8 @@ class BitmapFont {
     var y = 0.0;
 
     var lineSplit = new RegExp(r"\r\n|\r|\n");
-    var vxData = new List<double>();
-    var ixData = new List<int>();
+    var vxData = <double>[];
+    var ixData = <int>[];
 
     for (String line in text.split(lineSplit)) {
 
