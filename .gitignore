@@ -4,6 +4,7 @@
 .packages
 .pub/
 .dart_tool/
+.vscode/
 build/
 packages
 pubspec.lock

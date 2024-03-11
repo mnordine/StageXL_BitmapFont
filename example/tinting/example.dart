@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:html' as html;
 import 'dart:math' as math;
 import 'package:stagexl/stagexl.dart';
+import 'package:web/web.dart';
 import '../../lib/stagexl_bitmapfont.dart';
 
 String text = """
@@ -24,7 +24,7 @@ Future main() async {
 
   // Init Stage and RenderLoop
 
-  var canvas = html.querySelector('#stage') as html.CanvasElement;
+  var canvas = document.querySelector('#stage') as HTMLCanvasElement;
   var stage = new Stage(canvas, width: 1600, height: 700);
   var renderLoop = new RenderLoop();
   renderLoop.addStage(stage);

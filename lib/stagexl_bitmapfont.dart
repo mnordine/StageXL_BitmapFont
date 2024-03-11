@@ -4,7 +4,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:math' as math;
-import 'dart:html' show HttpRequest;
+import 'package:http/http.dart' as http;
+
 
 import 'package:stagexl/stagexl.dart';
 import 'package:xml/xml.dart';

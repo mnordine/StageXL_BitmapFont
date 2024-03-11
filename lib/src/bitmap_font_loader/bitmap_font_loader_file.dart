@@ -16,7 +16,7 @@ class _BitmapFontLoaderFile extends BitmapFontLoader {
   double getPixelRatio() => _loadInfo.pixelRatio;
 
   @override
-  Future<String> getSource() => HttpRequest.getString(_loadInfo.loaderUrl);
+  Future<String> getSource() => http.get(Uri.parse(_loadInfo.loaderUrl)).then((response) => response.body);
 
   @override
   Future<BitmapData> getBitmapData(int id, String filename) async {
