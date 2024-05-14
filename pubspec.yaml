@@ -5,7 +5,7 @@ homepage: http://www.stagexl.org
 publish_to: none
 
 environment:
-  sdk: '^3.4.0-247.0.dev'
+  sdk: '^3.4.0'
 
 dependencies:
   stagexl:
