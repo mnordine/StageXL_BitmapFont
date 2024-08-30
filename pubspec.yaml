@@ -12,7 +12,7 @@ dependencies:
     git:
       url: https://github.com/CEksal/StageXL
       ref: package-web
-  web: ^0.5.1
+  web: ^1.0.0
   http: ^1.1.0
 
 dev_dependencies:
