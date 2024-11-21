@@ -10,7 +10,7 @@ environment:
 dependencies:
   stagexl:
     git:
-      url: https://github.com/CEksal/StageXL
+      url: https://github.com/mnordine/StageXL
       ref: package-web
   web: ^1.0.0
   http: ^1.1.0
