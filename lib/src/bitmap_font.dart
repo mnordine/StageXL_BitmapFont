@@ -130,8 +130,8 @@ class BitmapFont {
     var bounds = new Rectangle<num>(0, 0, maxX, y);
     var renderTexture = this.pages[0].bitmapData.renderTexture;
     var renderTextureQuad = renderTexture.quad.cut(bounds);
-    var vxList = new Float32List.fromList(vxData);
-    var ixList = new Int16List.fromList(ixData);
+    var vxList = Float32List.fromList(vxData);
+    var ixList = Int16List.fromList(ixData);
     renderTextureQuad.setCustomVertices(vxList, ixList);
 
     return renderTextureQuad;
