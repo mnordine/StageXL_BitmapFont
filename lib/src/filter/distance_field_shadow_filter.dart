@@ -29,14 +29,16 @@ class DistanceFieldShadowFilter extends BitmapFilter {
   //---------------------------------------------------------------------------
 
   @override
-  void apply(BitmapData bitmapData, [Rectangle<num> rectangle]) {}
+  void apply(BitmapData bitmapData, [Rectangle<num>? rectangle]) {
+    // TODO: implement DistanceFieldFilter for BitmapDatas.
+  }
 
   //---------------------------------------------------------------------------
 
   @override
   void renderFilter(
       RenderState renderState, RenderTextureQuad renderTextureQuad, int pass) {
-    RenderContextWebGL renderContext = renderState.renderContext;
+    var renderContext = renderState.renderContext as RenderContextWebGL;
     var renderTexture = renderTextureQuad.renderTexture;
     _DistanceFieldFilterProgram renderProgram;
 

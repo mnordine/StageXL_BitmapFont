@@ -26,7 +26,7 @@ class BitmapFont {
 
   static Future<BitmapFont> load(String url,
           [BitmapFontFormat bitmapFontFormat = BitmapFontFormat.FNT,
-          BitmapDataLoadOptions bitmapDataLoadOptions]) =>
+          BitmapDataLoadOptions? bitmapDataLoadOptions]) =>
       bitmapFontFormat.load(_BitmapFontLoaderFile(url, bitmapDataLoadOptions));
 
   static Future<BitmapFont> fromTextureAtlas(
@@ -45,7 +45,7 @@ class BitmapFont {
 
   //---------------------------------------------------------------------------
 
-  BitmapFontChar getChar(int id) {
+  BitmapFontChar? getChar(int id) {
     for (var i = 0; i < chars.length; i++) {
       var char = chars[i];
       if (char.id == id) return char;
@@ -53,7 +53,7 @@ class BitmapFont {
     return null;
   }
 
-  BitmapFontKerning getKerning(int first, int second) {
+  BitmapFontKerning? getKerning(int first, int second) {
     for (var i = 0; i < kernings.length; i++) {
       var kerning = kernings[i];
       if (kerning.first == first && kerning.second == second) {
