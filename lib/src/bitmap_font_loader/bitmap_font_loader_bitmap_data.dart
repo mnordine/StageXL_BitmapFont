@@ -9,7 +9,7 @@ class _BitmapFontLoaderBitmapData extends BitmapFontLoader {
   //----------------------------------------------------------------------------
 
   @override
-  double getPixelRatio() => bitmapData.renderTextureQuad.pixelRatio;
+  double getPixelRatio() => bitmapData.renderTextureQuad.pixelRatio.toDouble();
 
   @override
   Future<String> getSource() => Future.value(source);

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:html' as html;
+import 'package:web/web.dart';
 import 'package:stagexl/stagexl.dart';
 import 'package:stagexl_bitmapfont/stagexl_bitmapfont.dart';
 
@@ -18,7 +18,7 @@ Future main() async {
 
   // Init Stage and RenderLoop
 
-  var canvas = html.querySelector('#stage');
+  var canvas = document.querySelector('#stage') as HTMLCanvasElement;
   var stage = Stage(canvas, width: 800, height: 400);
   var renderLoop = RenderLoop();
   renderLoop.addStage(stage);

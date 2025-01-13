@@ -17,10 +17,10 @@ class _BitmapFontLoaderTextureAtlas extends BitmapFontLoader {
   Future<String> getSource() => Future.value(source);
 
   @override
-  Future<BitmapData> getBitmapData(int id, String filename) {
+  Future<BitmapData> getBitmapData(int id, String filename) async {
     var regex = RegExp(r'(.+?)(\.[^.]*$|$)');
-    var match = regex.firstMatch(filename);
-    var name = namePrefix + match.group(1);
-    return Future.value(textureAtlas.getBitmapData(name));
+    var match = regex.firstMatch(filename)!;
+    var name = namePrefix + match.group(1)!;
+    return textureAtlas.getBitmapData(name);
   }
 }

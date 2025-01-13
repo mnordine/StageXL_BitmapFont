@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:html' as html;
+import 'package:web/web.dart';
 import 'dart:math' as math;
 import 'package:stagexl/stagexl.dart';
 import 'package:stagexl_bitmapfont/stagexl_bitmapfont.dart';
@@ -26,7 +26,7 @@ Future main() async {
 
   // Init Stage and RenderLoop
 
-  var canvas = html.querySelector('#stage');
+  var canvas = document.querySelector('#stage') as HTMLCanvasElement;
   var stage = Stage(canvas, width: 1600, height: 800);
   var renderLoop = RenderLoop();
   renderLoop.addStage(stage);
@@ -36,8 +36,7 @@ Future main() async {
   var resourceManager = ResourceManager();
   resourceManager.addTextureAtlas('atlas', '../common/images/font_atlas.json');
   resourceManager.addTextFile('fnt1', '../common/fonts/fnt/Luckiest_Guy.fnt');
-  resourceManager.addTextFile(
-      'fnt2', '../common/fonts/fnt/Fascinate_Inline.fnt');
+  resourceManager.addTextFile('fnt2', '../common/fonts/fnt/Fascinate_Inline.fnt');
   resourceManager.addTextFile('fnt3', '../common/fonts/fnt/Sarina.fnt');
   resourceManager.addTextFile('fnt4', '../common/fonts/fnt/Sigmar_One.fnt');
   await resourceManager.load();
