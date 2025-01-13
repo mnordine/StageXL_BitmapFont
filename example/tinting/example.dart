@@ -4,7 +4,7 @@ import 'package:stagexl/stagexl.dart';
 import 'package:web/web.dart';
 import '../../lib/stagexl_bitmapfont.dart';
 
-String text = """
+String text = '''
 Lorem ipsum dolor sit amet, consetetur
 sadipscing elitr, sed diam nonumy eirmod
 tempor invidunt ut labore et dolore magna
@@ -12,7 +12,7 @@ aliquyam erat, sed diam voluptua. At vero
 eos et accusam et justo duo dolores et ea
 rebum. Stet clita kasd gubergren, no sea
 takimata sanctus est Lorem ipsum dolor
-sit amet.""";
+sit amet.''';
 
 Future main() async {
 
@@ -25,18 +25,18 @@ Future main() async {
   // Init Stage and RenderLoop
 
   var canvas = document.querySelector('#stage') as HTMLCanvasElement;
-  var stage = new Stage(canvas, width: 1600, height: 700);
-  var renderLoop = new RenderLoop();
+  var stage = Stage(canvas, width: 1600, height: 700);
+  var renderLoop = RenderLoop();
   renderLoop.addStage(stage);
 
   // load BitmapFont
 
-  var fontUrl = "../common/fonts/fnt/Fascinate_Inline.fnt";
+  var fontUrl = '../common/fonts/fnt/Fascinate_Inline.fnt';
   var bitmapFont = await BitmapFont.load(fontUrl, BitmapFontFormat.FNT);
 
   // create BitmapText and add it to the Stage
 
-  var bitmapText = new BitmapContainerText(bitmapFont);
+  var bitmapText = BitmapContainerText(bitmapFont);
   bitmapText.x = 50;
   bitmapText.y = 50;
   bitmapText.text = text;
@@ -52,11 +52,11 @@ Future main() async {
 
 void tintBitmapText(BitmapContainerText bitmapText) {
 
-  var random = new math.Random();
+  var random = math.Random();
 
   for (var bitmap in bitmapText.children) {
     var color = 0xFF000000 + random.nextInt(0xFFFFFF);
-    var filter = new TintFilter.fromColor(color);
+    var filter = TintFilter.fromColor(color);
     bitmap.filters = [filter];
   }
 }

@@ -10,9 +10,9 @@ class _BitmapFontFormatFnt extends BitmapFontFormat {
     var source = await bitmapFontLoader.getSource();
     var pixelRatio = bitmapFontLoader.getPixelRatio();
 
-    var argsRegExp = new RegExp(r'\s+(\w+)=((\-?\d+,?)+|".*?")');
-    var lineRegExp = new RegExp(r'(\w+)((' + argsRegExp.pattern + r')+)');
-    var splitRegExp = new RegExp(r'\r\n|\r|\n');
+    var argsRegExp = RegExp(r'\s+(\w+)=((\-?\d+,?)+|".*?")');
+    var lineRegExp = RegExp(r'(\w+)((' + argsRegExp.pattern + r')+)');
+    var splitRegExp = RegExp(r'\r\n|\r|\n');
 
     late BitmapFontInfo info;
     late BitmapFontCommon common;
@@ -30,78 +30,78 @@ class _BitmapFontFormatFnt extends BitmapFontFormat {
       var argsMatch = argsRegExp.allMatches(args);
       var argsMap = _convertArgsMatches(argsMatch);
 
-      if (chunk == "info") {
+      if (chunk == 'info') {
 
-        var paddings = _getIntList(argsMap, "padding", [0, 0, 0, 0]);
-        var spacings = _getIntList(argsMap, "spacing", [0, 0]);
+        var paddings = _getIntList(argsMap, 'padding', [0, 0, 0, 0]);
+        var spacings = _getIntList(argsMap, 'spacing', [0, 0]);
 
-        info = new BitmapFontInfo(
-          _getString(argsMap, "face", ""),
-          _getInt(argsMap, "size", 0),
-          _getBool(argsMap, "bold", false),
-          _getBool(argsMap, "italic", false),
-          _getBool(argsMap, "unicode", false),
-          _getBool(argsMap, "smooth", false),
-          _getInt(argsMap, "outline", 0),
-          _getInt(argsMap, "stretchH", 100),
-          _getInt(argsMap, "aa", 1),
-          _getString(argsMap, "charset", ""),
+        info = BitmapFontInfo(
+          _getString(argsMap, 'face', ''),
+          _getInt(argsMap, 'size', 0),
+          _getBool(argsMap, 'bold', false),
+          _getBool(argsMap, 'italic', false),
+          _getBool(argsMap, 'unicode', false),
+          _getBool(argsMap, 'smooth', false),
+          _getInt(argsMap, 'outline', 0),
+          _getInt(argsMap, 'stretchH', 100),
+          _getInt(argsMap, 'aa', 1),
+          _getString(argsMap, 'charset', ''),
           paddings[0], paddings[1], paddings[2], paddings[3],
           spacings[0], spacings[1]);
 
-      } else if (chunk == "common") {
+      } else if (chunk == 'common') {
 
-        common = new BitmapFontCommon(
-          _getInt(argsMap, "lineHeight", 0),
-          _getInt(argsMap, "base", 0),
-          _getInt(argsMap, "scaleW", 0),
-          _getInt(argsMap, "scaleH", 0),
-          _getInt(argsMap, "pages", 0),
-          _getBool(argsMap, "packed", false),
-          _getInt(argsMap, "alphaChnl", 0),
-          _getInt(argsMap, "redChnl", 0),
-          _getInt(argsMap, "greenChnl", 0),
-          _getInt(argsMap, "blueChnl", 0));
+        common = BitmapFontCommon(
+          _getInt(argsMap, 'lineHeight', 0),
+          _getInt(argsMap, 'base', 0),
+          _getInt(argsMap, 'scaleW', 0),
+          _getInt(argsMap, 'scaleH', 0),
+          _getInt(argsMap, 'pages', 0),
+          _getBool(argsMap, 'packed', false),
+          _getInt(argsMap, 'alphaChnl', 0),
+          _getInt(argsMap, 'redChnl', 0),
+          _getInt(argsMap, 'greenChnl', 0),
+          _getInt(argsMap, 'blueChnl', 0));
 
-      } else if (chunk == "page") {
+      } else if (chunk == 'page') {
 
-        var id = _getInt(argsMap, "id", 0);
-        var file = _getString(argsMap, "file", "");
+        var id = _getInt(argsMap, 'id', 0);
+        var file = _getString(argsMap, 'file', '');
         var bitmapData = await bitmapFontLoader.getBitmapData(id, file);
-        pages.add(new BitmapFontPage(id, bitmapData));
+        pages.add(BitmapFontPage(id, bitmapData));
 
-      } else if (chunk == "char") {
+      } else if (chunk == 'char') {
 
-        var id = _getInt(argsMap, "id", 0);
-        var x = _getInt(argsMap, "x", 0);
-        var y = _getInt(argsMap, "y", 0);
-        var width = _getInt(argsMap, "width", 0);
-        var height = _getInt(argsMap, "height", 0);
-        var xOffset = _getInt(argsMap, "xoffset", 0);
-        var yOffset = _getInt(argsMap, "yoffset", 0);
-        var advance = _getInt(argsMap, "xadvance", 0);
-        var pageId = _getInt(argsMap, "page", 0);
-        var colorChannel = _getInt(argsMap, "chnl", 0);
-        var letter = _getString(argsMap, "letter", "");
+        var id = _getInt(argsMap, 'id', 0);
+        var x = _getInt(argsMap, 'x', 0);
+        var y = _getInt(argsMap, 'y', 0);
+        var width = _getInt(argsMap, 'width', 0);
+        var height = _getInt(argsMap, 'height', 0);
+        var xOffset = _getInt(argsMap, 'xoffset', 0);
+        var yOffset = _getInt(argsMap, 'yoffset', 0);
+        var advance = _getInt(argsMap, 'xadvance', 0);
+        var pageId = _getInt(argsMap, 'page', 0);
+        var colorChannel = _getInt(argsMap, 'chnl', 0);
+        var letter = _getString(argsMap, 'letter', '');
 
-        var renderTextureQuad = new RenderTextureQuad.slice(
+        var renderTextureQuad = RenderTextureQuad.slice(
             pages.firstWhere((p) => p.id == pageId).bitmapData.renderTextureQuad,
-            new Rectangle<int>(x, y, width, height),
-            new Rectangle<int>(-xOffset, -yOffset, width, common.lineHeight));
+            Rectangle<int>(x, y, width, height),
+            Rectangle<int>(-xOffset, -yOffset, width, common.lineHeight));
 
-        var bitmapData = new BitmapData.fromRenderTextureQuad(renderTextureQuad);
-        chars.add(new BitmapFontChar(id, bitmapData, advance, colorChannel, letter));
+        var bitmapData = BitmapData.fromRenderTextureQuad(renderTextureQuad);
+        chars.add(BitmapFontChar(id, bitmapData, advance, colorChannel, letter));
 
-      } else if (chunk == "kerning") {
+      } else if (chunk == 'kerning') {
 
-        var first = _getInt(argsMap, "first", -1);
-        var second = _getInt(argsMap, "second", -1);
-        var amount = _getInt(argsMap, "amount", 0);
-        kernings.add(new BitmapFontKerning(first, second, amount));
+        var first = _getInt(argsMap, 'first', -1);
+        var second = _getInt(argsMap, 'second', -1);
+        var amount = _getInt(argsMap, 'amount', 0);
+        kernings.add(BitmapFontKerning(first, second, amount));
       }
     }
 
-    return new BitmapFont(info, common, pages, chars, kernings, pixelRatio);
+    return BitmapFont(info, common, pages, chars, kernings, pixelRatio);
   }
 
   //---------------------------------------------------------------------------
@@ -137,15 +137,15 @@ class _BitmapFontFormatFnt extends BitmapFontFormat {
   bool _getBool(Map<String, String> map, String name, bool defaultValue) {
     var value = map[name];
     if (value == null) return defaultValue;
-    if (value == "1") return true;
-    if (value == "0") return false;
-    throw new FormatException("Error converting '$name' to bool.");
+    if (value == '1') return true;
+    if (value == '0') return false;
+    throw FormatException("Error converting '$name' to bool.");
   }
 
   List<int> _getIntList(Map<String, String> map, String name, List<int> defaultValue) {
     var value = map[name];
     if (value is String) {
-      return value.split(",").map(int.parse).toList();
+      return value.split(',').map(int.parse).toList();
     } else {
       return defaultValue;
     }

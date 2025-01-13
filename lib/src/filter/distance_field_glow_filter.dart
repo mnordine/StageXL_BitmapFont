@@ -16,7 +16,7 @@ class DistanceFieldGlowFilter extends BitmapFilter {
   BitmapFilter clone() {
     var innerConfig = this.innerConfig.clone();
     var outerConfig = this.outerConfig.clone();
-    return new DistanceFieldGlowFilter(innerConfig, outerConfig);
+    return DistanceFieldGlowFilter(innerConfig, outerConfig);
   }
 
   //---------------------------------------------------------------------------
@@ -37,8 +37,8 @@ class DistanceFieldGlowFilter extends BitmapFilter {
     _DistanceFieldGlowFilterProgram renderProgram;
 
     renderProgram = renderContext.getRenderProgram(
-        r"$DistanceFieldGlowFilterProgram",
-        () => new _DistanceFieldGlowFilterProgram());
+        r'$DistanceFieldGlowFilterProgram',
+        () => _DistanceFieldGlowFilterProgram());
 
     renderContext.activateRenderProgram(renderProgram);
     renderContext.activateRenderTexture(renderTexture);
@@ -60,7 +60,7 @@ class _DistanceFieldGlowFilterProgram extends RenderProgram {
   //              Float32(outerThresholdMin), Float32(outerThresholdMax),
 
   @override
-  String get vertexShaderSource => """
+  String get vertexShaderSource => '''
 
     uniform mat4 uProjectionMatrix;
 
@@ -82,10 +82,10 @@ class _DistanceFieldGlowFilterProgram extends RenderProgram {
       vOuterColor = vec4(aOuterColor.rgb * aOuterColor.a, aOuterColor.a);
       gl_Position = vec4(aPosition, 0.0, 1.0) * uProjectionMatrix;
     }
-    """;
+    ''';
 
   @override
-  String get fragmentShaderSource => """
+  String get fragmentShaderSource => '''
 
     precision mediump float;
     uniform sampler2D uSampler;
@@ -105,7 +105,7 @@ class _DistanceFieldGlowFilterProgram extends RenderProgram {
       vec4 outerColor = vOuterColor * max(alpha.y - alpha.x, 0.0) * gradient;
       gl_FragColor = innerColor + outerColor;
     }
-    """;
+    ''';
 
   //---------------------------------------------------------------------------
 
@@ -114,13 +114,13 @@ class _DistanceFieldGlowFilterProgram extends RenderProgram {
 
     super.activate(renderContext);
 
-    renderingContext.uniform1i(uniforms["uSampler"], 0);
+    renderingContext.uniform1i(uniforms['uSampler'], 0);
 
-    renderBufferVertex.bindAttribute(attributes["aPosition"],   2, 64, 0);
-    renderBufferVertex.bindAttribute(attributes["aTexCoord"],   2, 64, 8);
-    renderBufferVertex.bindAttribute(attributes["aInnerColor"], 4, 64, 16);
-    renderBufferVertex.bindAttribute(attributes["aOuterColor"], 4, 64, 32);
-    renderBufferVertex.bindAttribute(attributes["aThreshold"],  4, 64, 48);
+    renderBufferVertex.bindAttribute(attributes['aPosition'],   2, 64, 0);
+    renderBufferVertex.bindAttribute(attributes['aTexCoord'],   2, 64, 8);
+    renderBufferVertex.bindAttribute(attributes['aInnerColor'], 4, 64, 16);
+    renderBufferVertex.bindAttribute(attributes['aOuterColor'], 4, 64, 32);
+    renderBufferVertex.bindAttribute(attributes['aThreshold'],  4, 64, 48);
   }
 
   //---------------------------------------------------------------------------

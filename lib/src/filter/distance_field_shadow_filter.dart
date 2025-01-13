@@ -23,8 +23,8 @@ class DistanceFieldShadowFilter extends BitmapFilter {
   BitmapFilter clone() {
     var frontConfig = this.frontConfig.clone();
     var shadowConfig = this.shadowConfig.clone();
-    return new DistanceFieldShadowFilter(
-        frontConfig, shadowConfig, this.offsetX, this.offsetY);
+    return DistanceFieldShadowFilter(
+        frontConfig, shadowConfig, offsetX, offsetY);
   }
 
   //---------------------------------------------------------------------------
@@ -45,18 +45,18 @@ class DistanceFieldShadowFilter extends BitmapFilter {
     _DistanceFieldFilterProgram renderProgram;
 
     renderProgram  = renderContext.getRenderProgram(
-        r"$DistanceFieldFilterProgram",
-        () => new _DistanceFieldFilterProgram());
+        r'$DistanceFieldFilterProgram',
+        () => _DistanceFieldFilterProgram());
 
     renderContext.activateRenderProgram(renderProgram);
     renderContext.activateRenderTexture(renderTexture);
 
     renderState.globalMatrix.prependTranslation(offsetX, offsetY);
     renderProgram.renderDistanceFieldFilterQuad(
-        renderState, renderTextureQuad, this.shadowConfig);
+        renderState, renderTextureQuad, shadowConfig);
 
     renderState.globalMatrix.prependTranslation(-offsetX, -offsetY);
     renderProgram.renderDistanceFieldFilterQuad(
-        renderState, renderTextureQuad, this.frontConfig);
+        renderState, renderTextureQuad, frontConfig);
   }
 }

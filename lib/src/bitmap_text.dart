@@ -12,13 +12,13 @@ class BitmapText extends Bitmap {
 
   final BitmapFont bitmapFont;
 
-  String _text = "";
-  HorizontalAlign _hAlign = HorizontalAlign.Left;
+  String _text = '';
+  HorizontalAlign horizontalAlign = HorizontalAlign.Left;
   num _origX = 0;
 
   BitmapText(this.bitmapFont) : super() {
     if (bitmapFont.pages.length > 1) {
-      throw new ArgumentError("Use BitmapContainerText for multi page fonts.");
+      throw ArgumentError('Use BitmapContainerText for multi page fonts.');
     }
   }
 
@@ -34,26 +34,21 @@ class BitmapText extends Bitmap {
 
   set text(String value) {
     _text = value;
-    if (value == "") {
-      this.bitmapData = null;
+    if (value == '') {
+      bitmapData = null;
     } else {
-      var renderTextureQuad = this.bitmapFont.createRenderTextureQuad(text);
-      this.bitmapData = new BitmapData.fromRenderTextureQuad(renderTextureQuad);
+      var renderTextureQuad = bitmapFont.createRenderTextureQuad(text);
+      bitmapData = BitmapData.fromRenderTextureQuad(renderTextureQuad);
 
       _align();
     }
   }
 
   void _align() {
-    switch (_hAlign) {
+    switch (horizontalAlign) {
       case HorizontalAlign.Left:   super.x = _origX; break;
       case HorizontalAlign.Center: super.x = _origX - width / 2; break;
       case HorizontalAlign.Right:  super.x = _origX - width; break;
     }
-  }
-
-  HorizontalAlign get horizontalAlign => _hAlign;
-  set horizontalAlign(HorizontalAlign value) {
-    _hAlign = value;
   }
 }

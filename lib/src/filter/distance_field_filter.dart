@@ -12,7 +12,7 @@ class DistanceFieldFilter extends BitmapFilter {
   @override
   BitmapFilter clone() {
     var config = this.config.clone();
-    return new DistanceFieldFilter(config);
+    return DistanceFieldFilter(config);
   }
 
   //---------------------------------------------------------------------------
@@ -33,13 +33,13 @@ class DistanceFieldFilter extends BitmapFilter {
     _DistanceFieldFilterProgram renderProgram;
 
     renderProgram  = renderContext.getRenderProgram(
-        r"$DistanceFieldFilterProgram",
-        () => new _DistanceFieldFilterProgram());
+        r'$DistanceFieldFilterProgram',
+        () => _DistanceFieldFilterProgram());
 
     renderContext.activateRenderProgram(renderProgram);
     renderContext.activateRenderTexture(renderTexture);
     renderProgram.renderDistanceFieldFilterQuad(
-        renderState, renderTextureQuad, this.config);
+        renderState, renderTextureQuad, config);
   }
 }
 
@@ -54,7 +54,7 @@ class _DistanceFieldFilterProgram extends RenderProgram {
   // aThreshold:  Float32(thresholdMin), Float32(thresholdMax)
 
   @override
-  String get vertexShaderSource => """
+  String get vertexShaderSource => '''
 
     uniform mat4 uProjectionMatrix;
 
@@ -73,10 +73,10 @@ class _DistanceFieldFilterProgram extends RenderProgram {
       vInnerColor = vec4(aInnerColor.rgb * aInnerColor.a, aInnerColor.a);
       gl_Position = vec4(aPosition, 0.0, 1.0) * uProjectionMatrix;
     }
-    """;
+    ''';
 
   @override
-  String get fragmentShaderSource => """
+  String get fragmentShaderSource => '''
 
     precision mediump float;
     uniform sampler2D uSampler;
@@ -90,7 +90,7 @@ class _DistanceFieldFilterProgram extends RenderProgram {
       float alpha = smoothstep(vThreshold.x, vThreshold.y, distance);
       gl_FragColor = vInnerColor * alpha;
     }
-    """;
+    ''';
 
   //---------------------------------------------------------------------------
 
@@ -99,12 +99,12 @@ class _DistanceFieldFilterProgram extends RenderProgram {
 
     super.activate(renderContext);
 
-    renderingContext.uniform1i(uniforms["uSampler"], 0);
+    renderingContext.uniform1i(uniforms['uSampler'], 0);
 
-    renderBufferVertex.bindAttribute(attributes["aPosition"],   2, 40, 0);
-    renderBufferVertex.bindAttribute(attributes["aTexCoord"],   2, 40, 8);
-    renderBufferVertex.bindAttribute(attributes["aInnerColor"], 4, 40, 16);
-    renderBufferVertex.bindAttribute(attributes["aThreshold"],  2, 40, 32);
+    renderBufferVertex.bindAttribute(attributes['aPosition'],   2, 40, 0);
+    renderBufferVertex.bindAttribute(attributes['aTexCoord'],   2, 40, 8);
+    renderBufferVertex.bindAttribute(attributes['aInnerColor'], 4, 40, 16);
+    renderBufferVertex.bindAttribute(attributes['aThreshold'],  2, 40, 32);
   }
 
   //---------------------------------------------------------------------------

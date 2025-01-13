@@ -27,19 +27,19 @@ class BitmapFont {
   static Future<BitmapFont> load(String url, [
       BitmapFontFormat bitmapFontFormat = BitmapFontFormat.FNT,
       BitmapDataLoadOptions? bitmapDataLoadOptions]) =>
-          bitmapFontFormat.load(new _BitmapFontLoaderFile(
+          bitmapFontFormat.load(_BitmapFontLoaderFile(
               url, bitmapDataLoadOptions));
 
   static Future<BitmapFont> fromTextureAtlas(
       TextureAtlas textureAtlas, String namePrefix, String source, [
       BitmapFontFormat bitmapFontFormat = BitmapFontFormat.FNT]) =>
-          bitmapFontFormat.load(new _BitmapFontLoaderTextureAtlas(
+          bitmapFontFormat.load(_BitmapFontLoaderTextureAtlas(
               textureAtlas, namePrefix, source));
 
   static Future<BitmapFont> fromBitmapData(
       BitmapData bitmapData, String source, [
       BitmapFontFormat bitmapFontFormat = BitmapFontFormat.FNT]) =>
-          bitmapFontFormat.load(new _BitmapFontLoaderBitmapData(
+          bitmapFontFormat.load(_BitmapFontLoaderBitmapData(
               bitmapData, source));
 
   static Future<BitmapFont> withLoader(
@@ -50,16 +50,16 @@ class BitmapFont {
   //---------------------------------------------------------------------------
 
   BitmapFontChar? getChar(int id) {
-    for(int i = 0; i < this.chars.length; i++) {
-      var char = this.chars[i];
+    for(int i = 0; i < chars.length; i++) {
+      var char = chars[i];
       if (char.id == id) return char;
     }
     return null;
   }
 
   BitmapFontKerning? getKerning(int first, int second) {
-    for(int i = 0; i < this.kernings.length; i++) {
-      var kerning = this.kernings[i];
+    for(int i = 0; i < kernings.length; i++) {
+      var kerning = kernings[i];
       if (kerning.first == first && kerning.second == second) {
         return kerning;
       }
@@ -76,19 +76,19 @@ class BitmapFont {
 
   RenderTextureQuad createRenderTextureQuad(String text) {
 
-    if (this.pages.length != 1) {
-      throw new StateError("Not supported for multi page bitmap fonts.");
+    if (pages.length != 1) {
+      throw StateError('Not supported for multi page bitmap fonts.');
     }
 
     var ixOffset = 0;
     var lastCodeUnit = 0;
 
-    var scale = 1.0 / this.pixelRatio;
+    var scale = 1.0 / pixelRatio;
     var maxX = 0.0;
     var x = 0.0;
     var y = 0.0;
 
-    var lineSplit = new RegExp(r"\r\n|\r|\n");
+    var lineSplit = RegExp(r'\r\n|\r|\n');
     var vxData = <double>[];
     var ixData = <int>[];
 
@@ -96,9 +96,9 @@ class BitmapFont {
 
       for (int codeUnit in line.codeUnits) {
 
-        x += scale * this.getKerningAmount(lastCodeUnit, codeUnit);
+        x += scale * getKerningAmount(lastCodeUnit, codeUnit);
 
-        var bitmapFontChar = this.getChar(codeUnit);
+        var bitmapFontChar = getChar(codeUnit);
         if (bitmapFontChar == null) continue;
 
         var charQuad = bitmapFontChar.bitmapData.renderTextureQuad;
@@ -124,11 +124,11 @@ class BitmapFont {
       maxX = x > maxX ? x : maxX;
       lastCodeUnit = 0;
       x = 0.0;
-      y = y + scale * this.common.lineHeight;
+      y = y + scale * common.lineHeight;
     }
 
-    var bounds = new Rectangle<num>(0, 0, maxX, y);
-    var renderTexture = this.pages[0].bitmapData.renderTexture;
+    var bounds = Rectangle<num>(0, 0, maxX, y);
+    var renderTexture = pages[0].bitmapData.renderTexture;
     var renderTextureQuad = renderTexture.quad.cut(bounds);
     var vxList = Float32List.fromList(vxData);
     var ixList = Int16List.fromList(ixData);

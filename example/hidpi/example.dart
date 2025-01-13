@@ -3,11 +3,11 @@ import 'package:web/web.dart';
 import 'package:stagexl/stagexl.dart';
 import 'package:stagexl_bitmapfont/stagexl_bitmapfont.dart';
 
-String text = """
+String text = '''
 Hello World!
 Grumpy wizards make 
 toxic brew for the 
-evil Queen and Jack.""";
+evil Queen and Jack.''';
 
 Future main() async {
 
@@ -22,13 +22,13 @@ Future main() async {
   // Init Stage and RenderLoop
 
   var canvas = document.querySelector('#stage') as HTMLCanvasElement;
-  var stage = new Stage(canvas, width: 800, height: 400);
-  var renderLoop = new RenderLoop();
+  var stage = Stage(canvas, width: 800, height: 400);
+  var renderLoop = RenderLoop();
   renderLoop.addStage(stage);
 
   // load BitmapFont from File (default)
 
-  var bitmapFont = await BitmapFont.load("font/font@1x.fnt");
+  var bitmapFont = await BitmapFont.load('font/font@1x.fnt');
 
   // load BitmapFont from BitmapData (alternative)
 
@@ -48,7 +48,7 @@ Future main() async {
 
   // create BitmapText and add it to the Stage
 
-  var bitmapText = new BitmapText(bitmapFont);
+  var bitmapText = BitmapText(bitmapFont);
   bitmapText.x = 50;
   bitmapText.y = 50;
   bitmapText.text = text;

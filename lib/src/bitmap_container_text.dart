@@ -3,7 +3,7 @@ part of stagexl_bitmapfont;
 class BitmapContainerText extends DisplayObjectContainer {
 
   final BitmapFont bitmapFont;
-  String _text = "";
+  String _text = '';
 
   BitmapContainerText(this.bitmapFont);
 
@@ -13,22 +13,22 @@ class BitmapContainerText extends DisplayObjectContainer {
 
   set text(String value) {
 
-    this.removeChildren();
+    removeChildren();
     _text = value;
 
     var x = 0.0;
     var y = 0.0;
-    var scale = 1.0 / this.bitmapFont.pixelRatio;
+    var scale = 1.0 / bitmapFont.pixelRatio;
     var lastCodeUnit = 0;
 
-    var lineSplit = new RegExp(r"\r\n|\r|\n");
+    var lineSplit = RegExp(r'\r\n|\r|\n');
 
     for(String line in value.split(lineSplit)) {
       for(int codeUnit in line.codeUnits) {
         var bitmapFontChar = bitmapFont.getChar(codeUnit);
         if (bitmapFontChar != null) {
           x += scale * bitmapFont.getKerningAmount(lastCodeUnit, codeUnit);
-          var bitmap = new Bitmap(bitmapFontChar.bitmapData);
+          var bitmap = Bitmap(bitmapFontChar.bitmapData);
           bitmap.x = x;
           bitmap.y = y;
           bitmap.addTo(this);
