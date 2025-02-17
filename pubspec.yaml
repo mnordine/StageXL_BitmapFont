@@ -10,7 +10,7 @@ dependencies:
   stagexl:
     git:
       url: https://github.com/mnordine/StageXL
-      ref: package-web
+      ref: vertex-array-objects
   web: ^1.0.0
   http: ^1.1.0
   lints: ^5.1.1
