@@ -111,7 +111,10 @@ class _DistanceFieldGlowFilterProgram extends RenderProgram {
     super.activate(renderContext);
 
     renderingContext.uniform1i(uniforms['uSampler'], 0);
+  }
 
+  @override
+  void setupAttributes() {
     renderBufferVertex.bindAttribute(attributes['aPosition'], 2, 64, 0);
     renderBufferVertex.bindAttribute(attributes['aTexCoord'], 2, 64, 8);
     renderBufferVertex.bindAttribute(attributes['aInnerColor'], 4, 64, 16);
