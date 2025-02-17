@@ -7,10 +7,8 @@ environment:
   sdk: '^3.4.0'
 
 dependencies:
-  stagexl:
-    git:
-      url: https://github.com/mnordine/StageXL
-      ref: vertex-array-objects
+  stagexl: 
+    git: https://github.com/mnordine/StageXL
   web: ^1.0.0
   http: ^1.1.0
   lints: ^5.1.1
