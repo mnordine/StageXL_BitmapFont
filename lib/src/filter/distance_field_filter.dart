@@ -95,7 +95,10 @@ class _DistanceFieldFilterProgram extends RenderProgram {
     super.activate(renderContext);
 
     renderingContext.uniform1i(uniforms['uSampler'], 0);
+  }
 
+  @override
+  void setupAttributes() {
     renderBufferVertex.bindAttribute(attributes['aPosition'], 2, 40, 0);
     renderBufferVertex.bindAttribute(attributes['aTexCoord'], 2, 40, 8);
     renderBufferVertex.bindAttribute(attributes['aInnerColor'], 4, 40, 16);
