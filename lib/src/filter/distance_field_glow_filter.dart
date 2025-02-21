@@ -57,8 +57,30 @@ class _DistanceFieldGlowFilterProgram extends RenderProgram {
   //              Float32(outerThresholdMin), Float32(outerThresholdMax),
 
   @override
-  String get vertexShaderSource => '''
+  String get vertexShaderSource => isWebGL2 ? '''
+    #version 300 es
 
+    uniform mat4 uProjectionMatrix;
+
+    in vec2 aPosition;
+    in vec2 aTexCoord;
+    in vec4 aInnerColor;
+    in vec4 aOuterColor;
+    in vec4 aThreshold;
+
+    out vec2 vTexCoord;
+    out vec4 vInnerColor;
+    out vec4 vOuterColor;
+    out vec4 vThreshold;
+
+    void main() {
+      vTexCoord = aTexCoord;
+      vThreshold = aThreshold;
+      vInnerColor = vec4(aInnerColor.rgb * aInnerColor.a, aInnerColor.a);
+      vOuterColor = vec4(aOuterColor.rgb * aOuterColor.a, aOuterColor.a);
+      gl_Position = vec4(aPosition, 0.0, 1.0) * uProjectionMatrix;
+    }
+    ''' : '''
     uniform mat4 uProjectionMatrix;
 
     attribute vec2 aPosition;
@@ -82,8 +104,30 @@ class _DistanceFieldGlowFilterProgram extends RenderProgram {
     ''';
 
   @override
-  String get fragmentShaderSource => '''
+  String get fragmentShaderSource => isWebGL2 ? '''
+    #version 300 es
 
+    precision mediump float;
+    uniform sampler2D uSampler;
+
+    in vec2 vTexCoord;
+    in vec4 vInnerColor;
+    in vec4 vOuterColor;
+    in vec4 vThreshold;
+
+    out vec4 fragColor;
+
+    void main() {
+      vec2 distance = texture(uSampler, vTexCoord).aa;
+      vec2 alpha = smoothstep(vThreshold.xz, vThreshold.yw, distance);
+      float gradientLength = vThreshold.x - vThreshold.z;
+      float gradientPosition = distance.x - vThreshold.z;
+      float gradient = clamp(gradientPosition / gradientLength, 0.0, 1.0);
+      vec4 innerColor = vInnerColor * alpha.x;
+      vec4 outerColor = vOuterColor * max(alpha.y - alpha.x, 0.0) * gradient;
+      fragColor = innerColor + outerColor;
+    }
+    ''' : '''
     precision mediump float;
     uniform sampler2D uSampler;
 

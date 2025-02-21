@@ -50,7 +50,27 @@ class _DistanceFieldFilterProgram extends RenderProgram {
   // aThreshold:  Float32(thresholdMin), Float32(thresholdMax)
 
   @override
-  String get vertexShaderSource => '''
+  String get vertexShaderSource => isWebGL2 ? '''
+    #version 300 es
+
+    uniform mat4 uProjectionMatrix;
+
+    in vec2 aPosition;
+    in vec2 aTexCoord;
+    in vec4 aInnerColor;
+    in vec2 aThreshold;
+
+    out vec2 vTexCoord;
+    out vec4 vInnerColor;
+    out vec2 vThreshold;
+
+    void main() {
+      vTexCoord = aTexCoord;
+      vThreshold = aThreshold;
+      vInnerColor = vec4(aInnerColor.rgb * aInnerColor.a, aInnerColor.a);
+      gl_Position = vec4(aPosition, 0.0, 1.0) * uProjectionMatrix;
+    }
+  ''' : '''
 
     uniform mat4 uProjectionMatrix;
 
@@ -72,7 +92,24 @@ class _DistanceFieldFilterProgram extends RenderProgram {
     ''';
 
   @override
-  String get fragmentShaderSource => '''
+  String get fragmentShaderSource => isWebGL2 ? '''
+    #version 300 es
+
+    precision mediump float;
+    uniform sampler2D uSampler;
+
+    in vec2 vTexCoord;
+    in vec4 vInnerColor;
+    in vec2 vThreshold;
+
+    out vec4 fragColor;
+
+    void main() {
+      float distance = texture(uSampler, vTexCoord).a;
+      float alpha = smoothstep(vThreshold.x, vThreshold.y, distance);
+      fragColor = vInnerColor * alpha;
+    }
+    ''' : '''
 
     precision mediump float;
     uniform sampler2D uSampler;
