@@ -8,7 +8,7 @@ class _BitmapFontFormatFnt extends BitmapFontFormat {
     var source = await bitmapFontLoader.getSource();
     var pixelRatio = bitmapFontLoader.getPixelRatio();
 
-    var argsRegExp = RegExp(r'\s+(\w+)=((\-?\d+,?)+|".*?")');
+    var argsRegExp = RegExp(r'\s+(\w+)=((\-?\d+,?)+|".*?"|)');
     var lineRegExp = RegExp(r'(\w+)((' + argsRegExp.pattern + r')+)');
     var splitRegExp = RegExp(r'\r\n|\r|\n');
 
