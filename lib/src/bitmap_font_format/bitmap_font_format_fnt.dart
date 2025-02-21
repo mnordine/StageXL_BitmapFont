@@ -128,7 +128,7 @@ class _BitmapFontFormatFnt extends BitmapFontFormat {
 
   bool _getBool(Map<String, String> map, String name, bool defaultValue) {
     var value = map[name];
-    if (value == null) return defaultValue;
+    if (value == null || value.isEmpty) return defaultValue;
     if (value == '1') return true;
     if (value == '0') return false;
     throw FormatException("Error converting '$name' to bool.");
