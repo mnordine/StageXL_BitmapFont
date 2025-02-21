@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 import 'package:stagexl/stagexl.dart';
 import 'package:web/web.dart';
-import '../../lib/stagexl_bitmapfont.dart';
+import 'package:stagexl_bitmapfont/stagexl_bitmapfont.dart';
 
 String text = '''
 Lorem ipsum dolor sit amet, consetetur
